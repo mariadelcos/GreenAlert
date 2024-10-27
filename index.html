@@ -8,7 +8,7 @@
     <style>
         body {
             background: linear-gradient(to bottom, #a8e6cf, #dcedc1);
-            height: 100vh;
+            height: 200vh;
             margin: 0;
             font-family: Arial, sans-serif;
             display: flex;
@@ -32,6 +32,35 @@
             color: #333;
             margin-top: 20px;
         }
+	.container {
+            display: flex; /* Usa flexbox para alinear tarjetas */
+            justify-content: space-around; /* Espacia las tarjetas */
+            margin-top: 20px; /* Espaciado superior */
+        }
+        .card {
+            background-color: #fff; /* Color de fondo de las tarjetas */
+            margin: 10px; /* Espaciado entre tarjetas */
+            padding: 20px; /* Espaciado interno */
+            border-radius: 8px; /* Bordes redondeados */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra */
+            text-align: center; /* Centra el texto */
+            width: 250px; /* Ancho fijo para las tarjetas */
+        }
+        .card h2 {
+            margin: 10px 0; /* Espaciado para el título de la tarjeta */
+            font-size: 24px; /* Tamaño de fuente */
+        }
+        .icon {
+            font-size: 50px; /* Tamaño del icono */
+            margin-bottom: 10px; /* Espaciado inferior */
+        }
+        .humidity {
+            color: #2196F3; /* Color azul para la humedad */
+        }
+        .solar {
+            color: #FF9800; /* Color naranja para la intensidad solar */
+        }
+
         form {
             margin-top: 20px;
             text-align: center;
@@ -61,12 +90,77 @@
             justify-content: center;
             width: 100%;
         }
+	ul {
+            list-style-type: none; /* Elimina los puntos predeterminados */
+            padding: 0; /* Elimina el padding */
+        }
+        li {
+            background-color: #fff; /* Color de fondo de los elementos */
+            margin: 10px 0; /* Espaciado entre elementos */
+            padding: 10px 15px; /* Espaciado interno */
+            border-radius: 5px; /* Bordes redondeados */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
+            transition: background-color 0.3s; /* Transición suave */
+        }
+        li:hover {
+            background-color: #e8f5e9; /* Color de fondo al pasar el ratón */
+        }
+        li::before {
+            content: "✔ "; /* Icono antes de cada elemento */
+            color: #4CAF50; /* Color del icono */
+            font-weight: bold; /* Negrita para el icono */
+        }
     </style>
 </head>
+
+
+
+
 <body>
+
     <h1 class="logo">Green Alert</h1>
+
     <p class="description">Monitorea el estado de tu maceta de forma fácil y rápida.</p>
+
+     <div class="container">
+        <div class="card humidity">
+            <div class="icon">💧</div> <!-- Icono de humedad -->
+            <h2>Humedad</h2>
+            <p> Humedad de la tierra:<span>*meter valor del sensor</span></p>
+        </div>
+        <div class="card solar">
+            <div class="icon">☀️</div> <!-- Icono de intensidad solar -->
+            <h2>Intensidad Solar</h2>
+            <p>Intensidad solar: <span> *meter valor del sensor</span></p>
+        </div>
+    </div>
+
+    <p class="description"> Consejos de cuidado: </p>
+    <ul>
+        <li>Situar la maceta en un  lugar con sufuiciente luz natural.</li>
+        <li>Rellenar el depósito de agua del dispositivo.</li>
+        <li>Fertiliza la planta según sus necesidades. </li>
+        <li>Revisa periódicamente la planta en busca de signos de plagas o enfermedades. </li>
+
+    </ul>
+    
+
+
     <div class="time" id="timeDisplay">Cargando...</div>
+
+
+
+    <!-- Contenedor del mapa meteorológico -->
+    <div class="map-container">
+        <iframe
+            src="https://openweathermap.org/weathermap?basemap=map&cities=true&layer=temperature&lat=0&lon=0&zoom=2&appid=bbbc82e63a480eee0449fbf50465ef72"
+            width="600"
+            height="400"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy">
+        </iframe>
+    </div>
 
     <!-- Formulario para ingresar información de la planta -->
     <form id="plantForm">
@@ -82,17 +176,6 @@
         <button type="submit">Enviar</button>
     </form>
 
-    <!-- Contenedor del mapa meteorológico -->
-    <div class="map-container">
-        <iframe
-            src="https://openweathermap.org/weathermap?basemap=map&cities=true&layer=temperature&lat=0&lon=0&zoom=2&appid=bbbc82e63a480eee0449fbf50465ef72"
-            width="600"
-            height="400"
-            style="border:0;"
-            allowfullscreen=""
-            loading="lazy">
-        </iframe>
-    </div>
 
     <script>
         // Script para actualizar la hora
@@ -110,11 +193,9 @@
             event.preventDefault(); // Evita el envío por defecto
 
             const plantName = document.getElementById('plantName').value;
-            const wateringFrequency = document.getElementById('wateringFrequency').value;
             const notes = document.getElementById('notes').value;
 
             console.log('Nombre de la planta:', plantName);
-            console.log('Frecuencia de riego:', wateringFrequency);
             console.log('Notas:', notes);
 
             alert('Información enviada. ¡Gracias!');
