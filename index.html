@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Alert</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap">
+    <style>
+        body {
+            background: linear-gradient(to bottom, #a8e6cf, #dcedc1);
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5em;
+            color: #228B22;
+            text-align: center;
+        }
+        .description {
+            font-size: 2em;
+            color: #333;
+            text-align: center;
+            margin: 10px 0;
+        }
+        .time {
+            font-size: 1.5em;
+            color: #333;
+            margin-top: 20px;
+        }
+        form {
+            margin-top: 20px;
+            text-align: center;
+        }
+        input, textarea {
+            font-size: 1em;
+            padding: 10px;
+            margin: 5px 0;
+            width: 80%;
+            max-width: 300px;
+        }
+        button {
+            font-size: 1em;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #228B22;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1e7e1e;
+        }
+        .map-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="logo">Green Alert</h1>
+    <p class="description">Monitorea el estado de tu maceta de forma fácil y rápida.</p>
+    <div class="time" id="timeDisplay">Cargando...</div>
+
+    <!-- Formulario para ingresar información de la planta -->
+    <form id="plantForm">
+        <label for="plantName">Nombre de la planta:</label>
+        <input type="text" id="plantName" name="plantName" required>
+
+        <label for="wateringFrequency">Frecuencia de riego (días):</label>
+        <input type="number" id="wateringFrequency" name="wateringFrequency" required>
+
+        <label for="notes">Notas:</label>
+        <textarea id="notes" name="notes" rows="4" placeholder="Escribe aquí tus notas..."></textarea>
+
+        <button type="submit">Enviar</button>
+    </form>
+
+    <!-- Contenedor del mapa meteorológico -->
+    <div class="map-container">
+        <iframe
+            src="https://openweathermap.org/weathermap?basemap=map&cities=true&layer=temperature&lat=0&lon=0&zoom=2&appid=bbbc82e63a480eee0449fbf50465ef72"
+            width="600"
+            height="400"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy">
+        </iframe>
+    </div>
+
+    <script>
+        // Script para actualizar la hora
+        function updateTime() {
+            const now = new Date();
+            const formattedTime = now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            document.getElementById('timeDisplay').textContent = formattedTime;
+        }
+
+        setInterval(updateTime, 1000); // Actualiza cada segundo
+        updateTime(); // Llama a la función una vez para mostrar la hora inmediatamente
+
+        // Manejo del envío del formulario
+        document.getElementById('plantForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita el envío por defecto
+
+            const plantName = document.getElementById('plantName').value;
+            const wateringFrequency = document.getElementById('wateringFrequency').value;
+            const notes = document.getElementById('notes').value;
+
+            console.log('Nombre de la planta:', plantName);
+            console.log('Frecuencia de riego:', wateringFrequency);
+            console.log('Notas:', notes);
+
+            alert('Información enviada. ¡Gracias!');
+        });
+    </script>
+</body>
+</html>
