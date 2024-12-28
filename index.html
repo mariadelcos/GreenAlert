@@ -117,10 +117,39 @@
 <link rel="manifest" href="/site.webmanifest">
 
 </head>
+	<script>
+   function obtenerDatos() {
+  fetch('https://script.google.com/macros/s/AKfycbwh6InXH_8qvojOwuMxWLaRjs8-RxOKN7Vpp2wV1J_XPRBlg5gcEYXhFNGRwh4lSLDJLg/exec')  // Usa la URL del script de Google
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);  // Muestra los datos en la consola para verificar la respuesta
+      
+      // Suponiendo que los datos están en las primeras columnas, puedes acceder a ellos
+      // Asegúrate de que el índice de la columna coincida con el lugar donde están los datos en tu hoja
+      const humedad = data[0][1];  // Esto obtiene el valor de la columna 1, fila 2 de la hoja de cálculo
+      const intensidadSolar = data[0][0];  // Obtén la intensidad solar desde la columna 2, fila 2
+
+      // Actualiza el contenido de tu página con los valores obtenidos
+      document.getElementById('humedad').textContent = humedad;  // Actualiza la humedad
+      document.getElementById('intensidad').textContent = intensidadSolar;  // Actualiza la intensidad solar
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+// Llama a la función cuando la página cargue
+//window.onload = function() {
+ // obtenerDatos();
+  //setInterval(obtenerDatos, 5000);  // Actualiza los datos cada 5 segundos
+//};
 
 
+    // Actualizar los datos cada 5 segundos
+    setInterval(obtenerDatos, 5000); // Esto ejecuta la función cada 5 segundos
 
+    // Llamada inicial para obtener los datos cuando la página se carga
+    obtenerDatos();
 
+</script>
 <body>
 
     <h1 class="logo">Green Alert</h1>
@@ -131,18 +160,18 @@
         <div class="card humidity">
             <div class="icon">💧</div> <!-- humedad -->
             <h2>Humedad</h2>
-            <p> Humedad de la tierra:<span>*meter valor del sensor</span></p>
+            <p> Humedad de la tierra:<span>humedad</span></p>
         </div>
         <div class="card solar">
             <div class="icon">☀️</div> <!-- intensidad solar -->
             <h2>Intensidad Solar</h2>
-            <p>Intensidad solar: <span> *meter valor del sensor</span></p>
+            <p>Intensidad solar: <span> intensidadSolar</span></p>
         </div>
     </div>
 
     <p class="description"> Consejos de cuidado: </p>
     <ul>
-        <li>Situar la maceta en un  lugar con sufuiciente luz natural.</li>
+        <li>Situar la maceta en un  lugar con suficiente luz natural.</li>
         <li>Rellenar el depósito de agua del dispositivo.</li>
         <li>Fertiliza la planta según sus necesidades. </li>
         <li>Revisa periódicamente la planta en busca de signos de plagas o enfermedades. </li>
